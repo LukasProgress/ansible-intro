@@ -1,0 +1,20 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /var/www/html;
+    index index.html;
+
+    location / {
+        autoindex on;
+    }
+
+    {% for user in users %}
+    location /{{ user.name }} {
+        alias /var/www/html/{{ user.name }}.html;
+        {% if user.position == 'Boss' %}
+        auth_basic "Restricted Access";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+        {% endif %}
+    }
+    {% endfor %}
+}

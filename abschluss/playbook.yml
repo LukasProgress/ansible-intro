@@ -1,0 +1,22 @@
+- name: Setup Webserver mit Nginx und Benutzerseiten
+  hosts: all
+  become: true
+
+  vars_files:
+    - vars/users.yml
+
+  handlers:
+    - import_tasks: handlers/main.yml
+
+  tasks:
+    - import_tasks: tasks/setup_nginx.yml
+    - import_tasks: tasks/create_users.yml
+    - import_tasks: tasks/generate_pages.yml
+    - import_tasks: tasks/secure_vip_pages.yml
+
+- name: Setze Cron-Job auf dem Steuer-Host
+  hosts: localhost
+  handlers:
+    - import_tasks: handlers/main.yml
+  tasks:
+    - import_tasks: tasks/setup_cron.yml

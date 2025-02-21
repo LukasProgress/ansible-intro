@@ -1,0 +1,6 @@
+- name: Erstelle Benutzer-Webseiten
+  template:
+    src: templates/user_page.j2
+    dest: "/var/www/html/{{ item.name }}.html"
+  loop: "{{ users }}"
+  notify: Reload Nginx

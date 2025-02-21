@@ -1,0 +1,21 @@
+- name: Installiere htpasswd falls nicht vorhanden
+  apt:
+    name: apache2-utils
+    state: present
+
+- name: Stelle sicher, dass /etc/nginx/.htpasswd existiert
+  file:
+    path: /etc/nginx/.htpasswd
+    state: touch
+    mode: '0644'
+
+- name: Bearbeite Passwort-Datei für Boss-Benutzer
+  shell: "htpasswd -b /etc/nginx/.htpasswd {{ item.name }} secretpassword"
+  loop: "{{ users }}"
+  when: item.position == 'Boss'
+
+- name: Konfiguriere Nginx für VIP-Seiten
+  template:
+    src: templates/nginx_config.j2
+    dest: /etc/nginx/sites-available/default
+  notify: Reload Nginx

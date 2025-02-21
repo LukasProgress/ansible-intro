@@ -1,0 +1,6 @@
+- name: Erstelle Benutzer auf dem System
+  user:
+    name: "{{ item.name }}"
+    state: present
+    create_home: yes
+  loop: "{{ users }}"

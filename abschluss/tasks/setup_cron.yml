@@ -1,0 +1,7 @@
+- name: Setze Cron-Job für Nginx Monitoring
+  cron:
+    name: "Check Nginx Status"
+    job: "/usr/bin/ansible-playbook -i /home/lukas/arbeit/24-04-ON/kursmaterial-24-04-ON/Modul_3/ansible/abschluss/inventory.ini /home/lukas/arbeit/24-04-ON/kursmaterial-24-04-ON/Modul_3/ansible/abschluss/tasks/monitor_nginx.yml >> /home/lukas/arbeit/24-04-ON/kursmaterial-24-04-ON/Modul_3/ansible/abschluss/ansible_cron.log 2>&1"
+    minute: "*/1"
+    user: lukas
+    state: present

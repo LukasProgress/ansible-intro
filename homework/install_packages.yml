@@ -1,0 +1,20 @@
+---
+- name: Install packages with loop
+  hosts: all
+  become: true
+  vars_files: 
+    - packages.yml
+  tasks: 
+    - name: Install required packages
+      apt: 
+        name: "{{ item }}"
+        state: present
+        update_cache: true 
+      loop: "{{ install }}"
+      when: ansible_facts['os_family'] == 'Debian'
+    
+    - name: Copy file only to ubuntu system
+      copy: 
+        src: ./inventory.ini
+        dest: /home/ubuntu/inventory.ini
+      when: ansible_facts['distribution'] == 'Ubuntu'

@@ -1,0 +1,11 @@
+<h1>
+  {% if item.position == 'Boss' %}
+    Willkommen auf der VIP-Seite von {{ item.name }}
+  {% else %}
+    Das ist die Seite von {{ item.name }}
+  {% endif %}
+</h1>
+
+{% if item.position == 'Boss' %}
+<p>Hier gibt es exklusive Inhalte!</p>
+{% endif %}
